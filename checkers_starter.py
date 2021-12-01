@@ -6,10 +6,17 @@ class Board:
     
     def __repr__(self):
         s = ''                          
-        for row in range(0, self.height):
+        for row in range(0, self.height): # The main board
+            
             for col in range(0, self.width):
                 s += self.data[row][col] 
+            s = s + '|' + str(row) #add row numbers
             s += '\n'
+        s += (self.width + 1) * '-'   # Bottom of the board
+        
+        s = s + '\n'
+        for col in range(self.width):
+            s = s + str(col) #put the column numbers underneath
         return s
 
     def can_place(self,r,c):
