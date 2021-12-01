@@ -42,7 +42,7 @@ class Board:
 
         if r_0 == r_1:#not diag cause rows
 
-            if abs(c_0 - c_1) != s: #fits ship length
+            if abs(c_0 - c_1) != (s-1): #fits ship length
                 return False
 
             c_lower = min(c_0,c_1)
@@ -53,7 +53,7 @@ class Board:
             return True
 
         if c_0 == c_1: #not diag cause cols
-            if abs(r_0 - r_1) != s:#fits ship length
+            if abs(r_0 - r_1) != (s-1):#fits ship length
                 return False
             r_lower = min(r_0,r_1)
             r_upper = max(r_0,r_1) #range doesnt work if the lower bound is higher
@@ -86,13 +86,13 @@ class Board:
             if r_0 == r_1:
                 c_min = min(c_0,c_1)
                 c_max = max(c_0,c_1)
-                for i in range(c_min, c_max):
+                for i in range(c_min, c_max+1):
                     self.place_ship(r_0,i)
 
             if c_0 == c_1:
                 r_min = min(r_0,r_1)
                 r_max = max(r_0,r_1)
-                for i in range(r_min, r_max):
+                for i in range(r_min, r_max+1):
                     self.place_ship(i,c_0)
             print(self)
 
@@ -114,13 +114,13 @@ class Board:
             if r_0 == r_1:
                 c_min = min(c_0,c_1)
                 c_max = max(c_0,c_1)
-                for i in range(c_min, c_max):
+                for i in range(c_min, c_max+1):
                     self.place_ship(r_0,i)
 
             if c_0 == c_1:
                 r_min = min(r_0,r_1)
                 r_max = max(r_0,r_1)
-                for i in range(r_min, r_max):
+                for i in range(r_min, r_max+1):
                     self.place_ship(i,c_0)
             print(self)
             
@@ -139,13 +139,13 @@ class Board:
             if r_0 == r_1:
                 c_min = min(c_0,c_1)
                 c_max = max(c_0,c_1)
-                for i in range(c_min, c_max):
+                for i in range(c_min, c_max+1):
                     self.place_ship(r_0,i)
 
             if c_0 == c_1:
                 r_min = min(r_0,r_1)
                 r_max = max(r_0,r_1)
-                for i in range(r_min, r_max):
+                for i in range(r_min, r_max+1):
                     self.place_ship(i,c_0)
             print(self)
 
@@ -164,14 +164,14 @@ class Board:
             if r_0 == r_1:
                 c_min = min(c_0,c_1)
                 c_max = max(c_0,c_1)
-                for i in range(c_min, c_max):
+                for i in range(c_min, c_max+1):
                     self.place_ship(r_0,i)
             
 
             if c_0 == c_1:
                 r_min = min(r_0,r_1)
                 r_max = max(r_0,r_1)
-                for i in range(r_min, r_max):
+                for i in range(r_min, r_max+1):
                     self.place_ship(i,c_0)
             print(self)
             
@@ -190,15 +190,17 @@ class Board:
             if r_0 == r_1:
                 c_min = min(c_0,c_1)
                 c_max = max(c_0,c_1)
-                for i in range(c_min, c_max):
+                for i in range(c_min, c_max+1):
                     self.place_ship(r_0,i)
 
             if c_0 == c_1:
                 r_min = min(r_0,r_1)
                 r_max = max(r_0,r_1)
-                for i in range(r_min, r_max):
+                for i in range(r_min, r_max+1):
                     self.place_ship(i,c_0)
             print(self)
+            
+
     
     
 
