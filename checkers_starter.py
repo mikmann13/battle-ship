@@ -89,6 +89,22 @@ class Board:
                 if abs(r_0-r_1) == 2:
                     self.place_ship(r_0,c_0,r_1,c_1)
             print(self)
+            
+    def aiGuess(self):
+        """Make a guess (random from list). Removes that guess from the list 
+        so AI doesn't guess it again, and if there is a hit, then in the 
+        next move it should check the four cardinal directions adjacent 
+        to that point. (makes a list of those and choose randomly between them)
+        Keeps guessing from those 4 directions until it gets another hit,
+        which means it's figured out the orientation of the ship. Then check that
+        direction and the direction on the opposite side (eg if north is a hit
+        then check south as well, if east is a hit then check west as well) in case
+        it hit in the middle of the ship. Keep guessing in those directions until
+        it sinks the ship."""
+        available_guesses = []
+        for row in range(0, self.height):
+            for col in range(0, self.width):
+                available_guesses += [(row, col)]  
 
 
 
