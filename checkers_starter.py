@@ -7,9 +7,8 @@ class Board:
     def __repr__(self):
         s = ''                          
         for row in range(0, self.height):
-            s += 'O'
             for col in range(0, self.width):
-                s += self.data[row][col] + 'O'
+                s += self.data[row][col] 
             s += '\n'
         return s
 
