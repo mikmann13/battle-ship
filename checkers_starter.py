@@ -42,7 +42,7 @@ class Board:
 
         if r_0 == r_1:#not diag cause rows
 
-            if abs(c_0 - c_1) != (s-1): #fits ship length
+            if abs(c_0 - c_1) != s: #fits ship length
                 return False
 
             c_lower = min(c_0,c_1)
@@ -53,7 +53,7 @@ class Board:
             return True
 
         if c_0 == c_1: #not diag cause cols
-            if abs(r_0 - r_1) != (s-1):#fits ship length
+            if abs(r_0 - r_1) != s:#fits ship length
                 return False
             r_lower = min(r_0,r_1)
             r_upper = max(r_0,r_1) #range doesnt work if the lower bound is higher
