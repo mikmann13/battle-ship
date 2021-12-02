@@ -357,6 +357,7 @@ class Board:
     def take_shot(self, r, c):
         if self.data[r][c] == 'S':
             self.data[r][c] = '*'
+            return True
         else:
             self.data[r][c] = 'X'
             return True 
