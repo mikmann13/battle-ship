@@ -212,6 +212,130 @@ class Board:
         col_guess = guess[1]
         self.data[row_guess][col_guess] = 'X'
         return
+    
+    def ai_board(self):
+        while True:
+            #destroyer
+            r_0 = random.randrange(0,8)
+            c_0 = random.randrange(0,8)
+            r_1 = random.randrange(0,8)
+            c_1 = random.randrange(0,8)
+            while not self.can_place(r_0,c_0,r_1,c_1,5):
+                r_0 = random.randrange(0,8)
+                c_0 = random.randrange(0,8)
+                r_1 = random.randrange(0,8)
+                c_1 = random.randrange(0,8)
+            if r_0 == r_1:
+                c_min = min(c_0,c_1)
+                c_max = max(c_0,c_1)
+                for i in range(c_min, c_max+1):
+                    self.place_ship(r_0,i)
+
+            if c_0 == c_1:
+                r_min = min(r_0,r_1)
+                r_max = max(r_0,r_1)
+                for i in range(r_min, r_max+1):
+                    self.place_ship(i,c_0)
+
+
+            #whatever is under destroyer
+            r_0 = random.randrange(0,8)
+            c_0 = random.randrange(0,8)
+            r_1 = random.randrange(0,8)
+            c_1 = random.randrange(0,8)
+            while not self.can_place(r_0,c_0,r_1,c_1,4):
+                r_0 = random.randrange(0,8)
+                c_0 = random.randrange(0,8)
+                r_1 = random.randrange(0,8)
+                c_1 = random.randrange(0,8)
+            if r_0 == r_1:
+                c_min = min(c_0,c_1)
+                c_max = max(c_0,c_1)
+                for i in range(c_min, c_max+1):
+                    self.place_ship(r_0,i)
+
+            if c_0 == c_1:
+                r_min = min(r_0,r_1)
+                r_max = max(r_0,r_1)
+                for i in range(r_min, r_max+1):
+                    self.place_ship(i,c_0)
+
+            
+
+
+            #under that idfk
+            r_0 = random.randrange(0,8)
+            c_0 = random.randrange(0,8)
+            r_1 = random.randrange(0,8)
+            c_1 = random.randrange(0,8)
+            while not self.can_place(r_0,c_0,r_1,c_1,3):
+                r_0 = random.randrange(0,8)
+                c_0 = random.randrange(0,8)
+                r_1 = random.randrange(0,8)
+                c_1 = random.randrange(0,8)
+            if r_0 == r_1:
+                c_min = min(c_0,c_1)
+                c_max = max(c_0,c_1)
+                for i in range(c_min, c_max+1):
+                    self.place_ship(r_0,i)
+
+            if c_0 == c_1:
+                r_min = min(r_0,r_1)
+                r_max = max(r_0,r_1)
+                for i in range(r_min, r_max+1):
+                    self.place_ship(i,c_0)
+
+
+
+
+            #happens twice
+            r_0 = random.randrange(0,8)
+            c_0 = random.randrange(0,8)
+            r_1 = random.randrange(0,8)
+            c_1 = random.randrange(0,8)
+            while not self.can_place(r_0,c_0,r_1,c_1,3):
+                r_0 = random.randrange(0,8)
+                c_0 = random.randrange(0,8)
+                r_1 = random.randrange(0,8)
+                c_1 = random.randrange(0,8)
+            if r_0 == r_1:
+                c_min = min(c_0,c_1)
+                c_max = max(c_0,c_1)
+                for i in range(c_min, c_max+1):
+                    self.place_ship(r_0,i)
+            
+
+            if c_0 == c_1:
+                r_min = min(r_0,r_1)
+                r_max = max(r_0,r_1)
+                for i in range(r_min, r_max+1):
+                    self.place_ship(i,c_0)
+
+            
+
+
+            #baby one
+            r_0 = random.randrange(0,8)
+            c_0 = random.randrange(0,8)
+            r_1 = random.randrange(0,8)
+            c_1 = random.randrange(0,8)
+            while not self.can_place(r_0,c_0,r_1,c_1,2):
+                r_0 = random.randrange(0,8)
+                c_0 = random.randrange(0,8)
+                r_1 = random.randrange(0,8)
+                c_1 = random.randrange(0,8)
+            if r_0 == r_1:
+                c_min = min(c_0,c_1)
+                c_max = max(c_0,c_1)
+                for i in range(c_min, c_max+1):
+                    self.place_ship(r_0,i)
+
+            if c_0 == c_1:
+                r_min = min(r_0,r_1)
+                r_max = max(r_0,r_1)
+                for i in range(r_min, r_max+1):
+                    self.place_ship(i,c_0)
+            return
 
     def aiGuess(self):
         """Make a guess (random from list). Removes that guess from the list 
