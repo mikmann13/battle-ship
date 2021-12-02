@@ -204,6 +204,15 @@ class Board:
     
     
 
+    def aiMove(self):
+        """Adds a move (a missile guess) based on what aiGuess recommends. Replaces
+        the character at that coordinate with an X to represent a missile fired there."""
+        guess = self.aiGuess()
+        row_guess = guess[0]
+        col_guess = guess[1]
+        self.data[row_guess][col_guess] = 'X'
+        return
+
     def aiGuess(self):
         """Make a guess (random from list). Removes that guess from the list 
         so AI doesn't guess it again, and if there is a hit, then in the 
@@ -230,7 +239,6 @@ class Board:
         guess = self.available_guesses[guess_location]
         print("I'll guess", guess, "!")
         self.available_guesses.remove(guess)
-        print(self.available_guesses)
         return guess
 
 
