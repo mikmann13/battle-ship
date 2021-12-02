@@ -358,9 +358,8 @@ class Board:
         if self.data[r][c] == 'S':
             self.data[r][c] = '*'
             return True
-        else:
+        elif self.data == 'O':
             self.data[r][c] = 'X'
-            return True 
         return False
 
 ai = Board()
