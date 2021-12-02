@@ -202,17 +202,6 @@ class Board:
             
 
     
-    
-
-    def aiMove(self):
-        """Adds a move (a missile guess) based on what aiGuess recommends. Replaces
-        the character at that coordinate with an X to represent a missile fired there."""
-        guess = self.aiGuess()
-        row_guess = guess[0]
-        col_guess = guess[1]
-        self.data[row_guess][col_guess] = 'X'
-        return
-    
     def ai_board(self):
         while True:
             #destroyer
@@ -310,7 +299,7 @@ class Board:
                 r_max = max(r_0,r_1)
                 for i in range(r_min, r_max+1):
                     self.place_ship(i,c_0)
-
+        
             
 
 
@@ -365,7 +354,14 @@ class Board:
         self.available_guesses.remove(guess)
         return guess
 
+    def take_shot(self, r, c):
+        if self.data[r][c] == 'S':
+            self.data[r][c] = 'H'
+            return True 
+        return False
 
+ai = Board()
+ai.ai_board()
 
     
 
