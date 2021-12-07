@@ -8,6 +8,8 @@ class Board:
         for row in range(0, 8):
             for col in range(0, 8):
                 self.available_guesses += [(row, col)]
+        self.successfulHits = []
+        self.available_adv_moves = []
     
     def __repr__(self):
         s = ''                          
@@ -331,32 +333,54 @@ class Board:
         so AI doesn't guess it again, and if there is a hit, then in the 
         next move it should check the four cardinal directions adjacent 
         to that point. (makes a list of those and choose randomly between them)
-        Keeps guessing from those 4 directions until it gets another hit,
-        which means it's figured out the orientation of the ship. Then check that
-        direction and the direction on the opposite side (eg if north is a hit
-        then check south as well, if east is a hit then check west as well) in case
-        it hit in the middle of the ship. Keep guessing in those directions until
-        it sinks the ship. Otherwise, if there has been no hit, then it guesses randomly."""
-        
-        
-        list_HitTrue = []
-        #Need a call to the hit register function here
+        Keeps guessing from those 4 directions until it gets another hit. Keep 
+        guessing in those directions until it sinks the ship. Otherwise, if 
+        there has been no hit, then it guesses based on probability function. """
+
+        if self.successfulHits != []:
+            chosenHitLocation = random.choice(range(len(self.successfulHits)))
+            chosenHitCoordinate = self.successfulHits[chosenHitLocation]
+            row = chosenHitCoordinate[0]
+            col = chosenHitCoordinate[1]
+            if (row, col) in self.available_guesses:
+                self.available_guesses.remove((row, col))
+            advantageous_moves = [(row+1, col), (row-1, col), (row, col+1), (row, col-1)]
+            for x in range(len(advantageous_moves)):
+                if advantageous_moves[x] in self.available_guesses:
+                    if advantageous_moves[x] not in self.available_adv_moves:
+                        self.available_adv_moves += [advantageous_moves[x]]
+            if self.available_adv_moves == []:
+                self.successfulHits.remove((row, col))
+                #subtracted the guessed hit from successful hits
+                guess = self.ai_just_lookin()
+            else:
+                guess_loc = random.choice(range(len(self.available_adv_moves)))
+                guess = self.available_adv_moves[guess_loc]
+                self.available_adv_moves.remove((guess))
+                self.available_guesses.remove((guess))
+                
+                
         #Check if there's a hit, and look at the coordinates of that hit
         #If there is a hit, save the cardinal direction coordinates around that hit in a list: 
         #[(row + 1, col), (row - 1, col), (row, col + 1), (row, col - 1)]
-        #Make a random guess from that list for the next move, and subtract that coordinate from 
-        # both the mini-hit list and the overall available guesses list
-
-        #else statement: if no move is advantageous (e.g. no hit), resort to random choice
-        guess_location = random.choice(range(len(self.available_guesses)))
-        guess = self.available_guesses[guess_location]
-        print("I'll guess", guess, "!")
-        self.available_guesses.remove(guess)
+        #Make a random guess from that list for the next move, and subtract that coordinate from available guesses
+        #else statement: if no move is advantageous (e.g. no hit), resort to probability density function
+        else:
+            guess = self.ai_just_lookin()
+        
         return guess
 
     def take_shot(self, r, c):
+        """in: r is a row c is a col
+           out: mutates the board to an * if there's a hit, X otherwise, 
+           returns True if the r and c is a hit
+           for host_game: when using take_shot, write self.take_shot(self.aiGuess()[0], self.aiGuess()[1])
+           Adds a move (a missile guess) based on what aiGuess recommends. Replaces the character 
+           at that coordinate with a * if it's successful, an X if it's not. 
+        """
         if self.data[r][c] == 'S':
             self.data[r][c] = '*'
+            self.successfulHits += [(r, c)]
             return True
         elif self.data == 'O':
             self.data[r][c] = 'X'
@@ -375,6 +399,12 @@ class Board:
         self.has_hot = False #mode for searching for a shot
         self.hot_zone = (0,0) #area to search around
         self.v5, self.v4, self.v3, self.v33, self.v2 = True, True, True, True, True #vals are True if that ship is not sunk
+        self.available_guesses = []
+        for row in range(0, 8):
+            for col in range(0, 8):
+                self.available_guesses += [(row, col)]
+        self.successfulHits = []
+        self.available_adv_moves = []
     
     def __repr__(self):
         s = ''                          
@@ -728,36 +758,56 @@ class Board:
         so AI doesn't guess it again, and if there is a hit, then in the 
         next move it should check the four cardinal directions adjacent 
         to that point. (makes a list of those and choose randomly between them)
-        Keeps guessing from those 4 directions until it gets another hit,
-        which means it's figured out the orientation of the ship. Then check that
-        direction and the direction on the opposite side (eg if north is a hit
-        then check south as well, if east is a hit then check west as well) in case
-        it hit in the middle of the ship. Keep guessing in those directions until
-        it sinks the ship. Otherwise, if there has been no hit, then it guesses randomly."""
-        
-        
-        list_HitTrue = []
-        #Need a call to the hit register function here
+        Keeps guessing from those 4 directions until it gets another hit. Keep 
+        guessing in those directions until it sinks the ship. Otherwise, if 
+        there has been no hit, then it guesses based on probability function. """
+
+        if self.successfulHits != []:
+            chosenHitLocation = random.choice(range(len(self.successfulHits)))
+            chosenHitCoordinate = self.successfulHits[chosenHitLocation]
+            row = chosenHitCoordinate[0]
+            col = chosenHitCoordinate[1]
+            if (row, col) in self.available_guesses:
+                self.available_guesses.remove((row, col))
+            advantageous_moves = [(row+1, col), (row-1, col), (row, col+1), (row, col-1)]
+            for x in range(len(advantageous_moves)):
+                if advantageous_moves[x] in self.available_guesses:
+                    if advantageous_moves[x] not in self.available_adv_moves:
+                        self.available_adv_moves += [advantageous_moves[x]]
+            if self.available_adv_moves == []:
+                self.successfulHits.remove((row, col))
+                #subtracted the guessed hit from successful hits
+                #successful hits is empty: go to probability density function
+                guess = self.ai_just_lookin()
+            else:
+                guess_loc = random.choice(range(len(self.available_adv_moves)))
+                guess = self.available_adv_moves[guess_loc]
+                self.available_adv_moves.remove((guess))
+                self.available_guesses.remove((guess))
+                
+                
         #Check if there's a hit, and look at the coordinates of that hit
         #If there is a hit, save the cardinal direction coordinates around that hit in a list: 
         #[(row + 1, col), (row - 1, col), (row, col + 1), (row, col - 1)]
-        #Make a random guess from that list for the next move, and subtract that coordinate from 
-        # both the mini-hit list and the overall available guesses list
-
-        #else statement: if no move is advantageous (e.g. no hit), resort to random choice
-        guess_location = random.choice(range(len(self.available_guesses)))
-        guess = self.available_guesses[guess_location]
-        print("I'll guess", guess, "!")
-        self.available_guesses.remove(guess)
+        #Make a random guess from that list for the next move, and subtract that coordinate from available guesses
+        #else statement: if no move is advantageous (e.g. no hit), resort to probability density function
+        else:
+            guess = self.ai_just_lookin()
+        
         return guess
-
+    
     def take_shot(self, r, c):
         """in: r is a row c is a col
-           out: mutates the board to an * if there's a hit, X otherwise, returns True if the r and c is a hit
+           out: mutates the board to an * if there's a hit, X otherwise, 
+           returns True if the r and c is a hit
+           for host_game: when using take_shot, write self.take_shot(self.aiGuess()[0], self.aiGuess()[1])
+           Adds a move (a missile guess) based on what aiGuess recommends. Replaces the character 
+           at that coordinate with a * if it's successful, an X if it's not. 
         """
         if self.data[r][c] == 'S':
             self.data[r][c] = '*'
             self.opp_data[r][c] = '*'
+            self.successfulHits += [(r, c)]
             return True
         elif self.data[r][c] == 'O':
             self.data[r][c] = 'X'
@@ -895,8 +945,8 @@ class Board:
                 print('You missed. Better luck next time!')
 
             #Ai takes a shot at the player
-            ai_shot_row = playerBoard.ai_just_lookin()[0]
-            ai_shot_col = playerBoard.ai_just_lookin()[1]
+            ai_shot_row = playerBoard.ai_just_lookin()[0] #replace with playerBoard.aiGuess()[0]
+            ai_shot_col = playerBoard.ai_just_lookin()[1] #replace with playerBoard.aiGuess()[1]
             ai_shot = playerBoard.take_shot(ai_shot_row, ai_shot_col)
             playerhits.take_shot(ai_shot_row, ai_shot_col)
             print("Your Ships")
@@ -945,4 +995,3 @@ def lol_how_fast_vis(N):
             count += 1
         data.append(count)
     return data
-
